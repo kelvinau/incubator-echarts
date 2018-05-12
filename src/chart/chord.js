@@ -669,9 +669,9 @@ define(function (require) {
             // var labelColor = this.query(
                 // mainSerie, 'itemStyle.normal.label.color'
             // );
-            var rotateLabel = this.query(
-                mainSerie, 'itemStyle.normal.label.rotate'
-            );
+            // var rotateLabel = this.query(
+            //     mainSerie, 'itemStyle.normal.label.rotate'
+            // );
             var labelDistance = this.query(
                 mainSerie, 'itemStyle.normal.label.distance'
             );
@@ -681,6 +681,9 @@ define(function (require) {
             var sign = clockWise ? 1 : -1;
 
             graph.eachNode(function (node) {
+                var rotateLabel = this.query(
+                    node.data, 'itemStyle.normal.label.rotate'
+                );
                 var startAngle = node.layout.startAngle / Math.PI * 180 * sign;
                 var endAngle = node.layout.endAngle / Math.PI * 180 * sign;
                 var angle = (startAngle * -sign + endAngle * -sign) / 2;
