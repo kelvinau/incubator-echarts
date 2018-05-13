@@ -41,9 +41,12 @@
                             name: 'W32/Monderb.G!tr',
                             itemStyle: {
                                 normal: {
-                                    color: 'black',
                                     label: {
                                         rotate: true,
+                                        textStyle: {
+                                            color: '#9e4851',
+                                            fontStyle: 'bold',
+                                        }
                                     }
                                 }
                             },
@@ -52,9 +55,12 @@
                             name: 'Riskware/BitCoin',
                             itemStyle: {
                                 normal: {
-                                    color: 'black',
                                     label: {
                                         rotate: true,
+                                        textStyle: {
+                                            color: '#9e4851',
+                                            fontStyle: 'bold',
+                                        }
                                     }
                                 }
                             },
@@ -63,15 +69,28 @@
                             name: 'W32/Conficker.U!worm',
                             itemStyle: {
                                 normal: {
-                                    color: 'black',
                                     label: {
                                         rotate: true,
+                                        textStyle: {
+                                            color: '#9e4851',
+                                            fontStyle: 'bold',
+                                        }
                                     }
                                 }
                             },
                         },
                         {
                             name: 'United States',
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        textStyle: {
+                                            color: '#4f5762',
+                                            fontStyle: 'bold',
+                                        }
+                                    }
+                                }
+                            },
                             icon: {
                                 label: {
                                     src: 'http://icons.iconarchive.com/icons/custom-icon-design/all-country-flag/256/Jarvis-Island-Flag-icon.png',
@@ -82,6 +101,16 @@
                         },
                         {
                             name: 'China',
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        textStyle: {
+                                            color: '#4f5762',
+                                            fontStyle: 'bold',
+                                        }
+                                    }
+                                }
+                            },
                             icon: {
                                 label: {
                                     src: 'http://icons.iconarchive.com/icons/custom-icon-design/all-country-flag/256/China-Flag-icon.png',
@@ -92,6 +121,16 @@
                         },
                         {
                             name: 'Canada',
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        textStyle: {
+                                            color: '#4f5762',
+                                            fontStyle: 'bold',
+                                        }
+                                    }
+                                }
+                            },
                             icon: {
                                 label: {
                                     src: 'http://icons.iconarchive.com/icons/custom-icon-design/all-country-flag/256/Canada-Flag-icon.png',
@@ -152,30 +191,6 @@
                     ]
                 }]
             };
-
-            // option.series[0].nodes.forEach(function (node, i) {
-            //   var color;
-            //   var fontStyle;
-            //   if (i < 10) {
-            //     color = 'red';
-            //     fontStyle = 'normal';
-            //   }
-            //   else {
-            //     color = 'blue';
-            //     fontStyle = 'italic';
-            //   }
-            //   node.itemStyle = {
-            //     normal: {
-            //       label: {
-            //         textStyle: {
-            //           color: color,
-            //           fontWeight: 'bold',
-            //           fontStyle: fontStyle,
-            //         }
-            //       }
-            //     }
-            //   }
-            // })
 
             var myChart = echarts.init(document.getElementById('main'));
             myChart.setOption(option);
