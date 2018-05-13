@@ -444,12 +444,13 @@ define('echarts/chart/chord', [
                         brushType: 'fill',
                         opacity: 1,
                         color: color,
-                        clockWise: clockWise
+                        clockWise: clockWise,
+                        sectorIcon: this.query(node.data, 'icon.sector')
                     },
                     clickable: mainSerie.clickable,
                     highlightStyle: {
                         brushType: 'fill'
-                    }
+                    },
                 });
                 sector.style.lineWidth = this.deepQuery([
                     node.data,

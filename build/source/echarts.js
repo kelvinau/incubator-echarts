@@ -19517,41 +19517,49 @@ define('zrender/zrender', [
             ctx.lineTo(unitX * r + x, unitY * r + y);
             ctx.arc(x, y, r, startAngle, endAngle, !clockWise);
             ctx.lineTo(math.cos(endAngle) * r0 + x, math.sin(endAngle) * r0 + y);
+            ctx.closePath();
+
             if (r0 !== 0) {
                 // outside sector
                 ctx.arc(x, y, r0, endAngle, startAngle, clockWise);
 
+                if (style.sectorIcon) {
+                    var img = new Image();
+                    img.onload = start;
+                    img.src = style.sectorIcon.src;
 
-                var img = new Image();
-                img.onload = start;
-                img.src = "http://icons.iconarchive.com/icons/custom-icon-design/all-country-flag/256/Jarvis-Island-Flag-icon.png";
-                function start() {
+                    function start() {
 
-                    var pattern = ctx.createPattern(img, 'repeat');
+                        var pattern = document.createElement('canvas');
+                        // set the resized width and height
+                        pattern.width = 50;
+                        pattern.height = 50;
+                        pattern.getContext('2d').drawImage(img, 0, 0, pattern.width, pattern.height);
 
-                    //ctx.strokeStyle = pattern;
-                    //ctx.strokeStyle = 'blue';
-                    // ctx.lineWidth = 3;
+                        //ctx.strokeStyle = pattern;
+                        //ctx.strokeStyle = 'blue';
+                        // ctx.lineWidth = 3;
 
-                    //ctx.fillStyle = 'blue';
-                    ctx.fillStyle = pattern;
-                    ctx.beginPath();
+                        //ctx.fillStyle = 'blue';
+                        ctx.fillStyle = ctx.createPattern(pattern, 'repeat');
+                        ctx.beginPath();
 
-                    ctx.moveTo(unitX * r0 + x, unitY * r0 + y);
-                    ctx.lineTo(unitX * r + x, unitY * r + y);
-                    ctx.arc(x, y, r, startAngle, endAngle, !clockWise);
-                    ctx.lineTo(math.cos(endAngle) * r0 + x, math.sin(endAngle) * r0 + y);
-                    ctx.arc(x, y, r0, endAngle, startAngle, clockWise);
+                        ctx.moveTo(unitX * r0 + x, unitY * r0 + y);
+                        ctx.lineTo(unitX * r + x, unitY * r + y);
+                        ctx.arc(x, y, r, startAngle, endAngle, !clockWise);
+                        ctx.lineTo(math.cos(endAngle) * r0 + x, math.sin(endAngle) * r0 + y);
+                        ctx.arc(x, y, r0, endAngle, startAngle, clockWise);
 
-                    ctx.closePath();
-                    ctx.fill();
+                        ctx.closePath();
+                        ctx.fill();
+
+                    }
 
                 }
-
+                
 
        
             }
-            ctx.closePath();
 
 
 
