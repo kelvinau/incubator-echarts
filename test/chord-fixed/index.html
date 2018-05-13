@@ -10,9 +10,10 @@
     <h3>
         To add 1. rotateLabel -
         <i>Done</i>, 2. icon option -
-        <i>Done</i>, 3. padding control, and 4. sector backgronud country flag
+        <i>Done</i>, 3. chart radius -
+        <i>Done</i>, and 4. sector backgronud country flag
     </h3>
-    <div id="main" style="width: 1000px;height:600px;"></div>
+    <div id="main" style="width: 1000px;height:600px; border: 1px solid #ddd;"></div>
     <script>
         require(['echarts', 'echarts/chart/chord'], function (echarts) {
             var option = {
@@ -34,6 +35,7 @@
                     type: 'chord',
                     //sort: 'ascending',
                     //sortSub: 'descending',
+                    radius: ['50%', '60%'],
                     clickable: false,
                     nodes: [{
                             name: 'W32/Monderb.G!tr',
@@ -80,9 +82,23 @@
                         },
                         {
                             name: 'China',
+                            icon: {
+                                label: {
+                                    src: 'http://icons.iconarchive.com/icons/custom-icon-design/all-country-flag/256/China-Flag-icon.png',
+                                    width: 25,
+                                    height: 25,
+                                }
+                            }
                         },
                         {
-                            name: 'Canada'
+                            name: 'Canada',
+                            icon: {
+                                label: {
+                                    src: 'http://icons.iconarchive.com/icons/custom-icon-design/all-country-flag/256/Canada-Flag-icon.png',
+                                    width: 25,
+                                    height: 25,
+                                }
+                            }
                         },
                     ],
                     links: [{
