@@ -12761,15 +12761,35 @@ define('zrender/zrender', [
             var text = (style.text + '').split('\n');
             var lineHeight = area.getTextHeight('国', style.textFont);
             var rect = this.getRect(style);
-            var x = style.x;
+            var x;
             var y;
-            if (style.textBaseline == 'top') {
-                y = rect.y;
-            } else if (style.textBaseline == 'bottom') {
-                y = rect.y + lineHeight;
-            } else {
-                y = rect.y + lineHeight / 2;
+            if (style.icon) {
+                var img = new Image();
+                
+                img.onload = function () {
+                    ctx.drawImage(
+                        img, 
+                        style.x, 
+                        rect.y, 
+                        style.icon.width,
+                        style.icon.height
+                    );
+                }
+                img.src = style.icon.src;
+                x = style.x + style.icon.width + 2; // 2px of margin-right
+                y = rect.y + style.icon.height / 2;
             }
+            else {
+                x = style.x;
+                if (style.textBaseline == 'top') {
+                    y = rect.y;
+                } else if (style.textBaseline == 'bottom') {
+                    y = rect.y + lineHeight;
+                } else {
+                    y = rect.y + lineHeight / 2;
+                }
+            }
+
             for (var i = 0, l = text.length; i < l; i++) {
                 if (style.maxWidth) {
                     switch (style.brushType) {
@@ -12804,6 +12824,7 @@ define('zrender/zrender', [
                 }
                 y += lineHeight;
             }
+
             ctx.restore();
             return;
         },

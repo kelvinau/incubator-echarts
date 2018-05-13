@@ -1,143 +1,171 @@
 <html>
-  <head>
+
+<head>
     <script src="require.js"></script>
     <script src="/build/source/echarts.js"></script>
     <script src="/build/source/chart/chord.js"></script>
-  </head>
-  <body>
-      <h3>
-        To add rotateLabel and icon option for each node
-      </h3>
-      <div id="main" style="width: 1000px;height:600px;"></div>
-      <script>
+</head>
+
+<body>
+    <h3>
+        To add 1. rotateLabel -
+        <i>Done</i>, 2. icon option -
+        <i>Done</i>, 3. padding control, and 4. sector backgronud country flag
+    </h3>
+    <div id="main" style="width: 1000px;height:600px;"></div>
+    <script>
         require(['echarts', 'echarts/chart/chord'], function (echarts) {
-          var option = {
-            tooltip: {
-              trigger: 'item',
-              formatter: function (params) {
-                // link
-                if (params.indicator2) {
-                  /*         return params.indicator2 + ' ' + params.name + ' ' + params.indicator; */
-                  return params.indicator2 + ' - ' + params.indicator;
-                }
-                // node
-                else {
-                  return params.name
-                }
-              }
-            },
-            series: [{
-              type: 'chord',
-              //sort: 'ascending',
-              //sortSub: 'descending',
-              clickable: false,
-              itemStyle: {
-                normal: {
-                  color: 'black',
-                  label: {
-                    rotate: true,
-                  }
-                }
-              },
-              nodes: [
-              {
-                name: 'W32/Monderb.G!tr'
-              },
-              {
-                name: 'Riskware/BitCoin'
-              },
-              {
-                name: 'W32/Conficker.U!worm'
-              },
-              {
-                name: 'United States',
-              },
-              {
-                name: 'China'
-              },
-              {
-                name: 'Canada'
-              },
-              ],
-              links: [{
-                source: 'United States',
-                target: 'Riskware/Asparnet',
-                weight: 0.5,
-                name: 'link_name',
-              },
-              {
-                source: 'United States',
-                target: 'W32/Monderb.G!tr',
-                weight: 0.7,
-                name: 'link_name'
-              },
-              {
-                source: 'China',
-                target: 'W32/Conficker.U!worm',
-                weight: 0.5,
-                name: 'link_name'
-              },
-              {
-                source: 'Canada',
-                target: 'Riskware/BitCoin',
-                weight: 0.6,
-                name: 'link_name'
-              },
+            var option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: function (params) {
+                        // link
+                        if (params.indicator2) {
+                            /*         return params.indicator2 + ' ' + params.name + ' ' + params.indicator; */
+                            return params.indicator2 + ' - ' + params.indicator;
+                        }
+                        // node
+                        else {
+                            return params.name
+                        }
+                    }
+                },
+                series: [{
+                    type: 'chord',
+                    //sort: 'ascending',
+                    //sortSub: 'descending',
+                    clickable: false,
+                    nodes: [{
+                            name: 'W32/Monderb.G!tr',
+                            itemStyle: {
+                                normal: {
+                                    color: 'black',
+                                    label: {
+                                        rotate: true,
+                                    }
+                                }
+                            },
+                        },
+                        {
+                            name: 'Riskware/BitCoin',
+                            itemStyle: {
+                                normal: {
+                                    color: 'black',
+                                    label: {
+                                        rotate: true,
+                                    }
+                                }
+                            },
+                        },
+                        {
+                            name: 'W32/Conficker.U!worm',
+                            itemStyle: {
+                                normal: {
+                                    color: 'black',
+                                    label: {
+                                        rotate: true,
+                                    }
+                                }
+                            },
+                        },
+                        {
+                            name: 'United States',
+                            icon: {
+                                label: {
+                                    src: 'http://icons.iconarchive.com/icons/custom-icon-design/all-country-flag/256/Jarvis-Island-Flag-icon.png',
+                                    width: 25,
+                                    height: 25,
+                                }
+                            }
+                        },
+                        {
+                            name: 'China',
+                        },
+                        {
+                            name: 'Canada'
+                        },
+                    ],
+                    links: [{
+                            source: 'United States',
+                            target: 'Riskware/Asparnet',
+                            weight: 0.5,
+                            name: 'link_name',
+                        },
+                        {
+                            source: 'United States',
+                            target: 'W32/Monderb.G!tr',
+                            weight: 0.7,
+                            name: 'link_name'
+                        },
+                        {
+                            source: 'China',
+                            target: 'W32/Conficker.U!worm',
+                            weight: 0.5,
+                            name: 'link_name'
+                        },
+                        {
+                            source: 'Canada',
+                            target: 'Riskware/BitCoin',
+                            weight: 0.6,
+                            name: 'link_name'
+                        },
 
 
-              // Ribbon Type's chord must be two-directional between points
-              // should match the other way?
-              {
-                source: 'Riskware/Asparnet',
-                target: 'United States',
-                weight: 0.5
-              },
-              {
-                source: 'W32/Monderb.G!tr',
-                target: 'United States',
-                weight: 0.7
-              },
-              {
-                source: 'W32/Conficker.U!worm',
-                target: 'China',
-                weight: 0.5
-              },
-              {
-                source: 'Riskware/BitCoin',
-                target: 'Canada',
-                weight: 0.6
-              },
-              ]
-            }]
-          };
+                        // Ribbon Type's chord must be two-directional between points
+                        // should match the other way?
+                        {
+                            source: 'Riskware/Asparnet',
+                            target: 'United States',
+                            weight: 0.5
+                        },
+                        {
+                            source: 'W32/Monderb.G!tr',
+                            target: 'United States',
+                            weight: 0.7
+                        },
+                        {
+                            source: 'W32/Conficker.U!worm',
+                            target: 'China',
+                            weight: 0.5
+                        },
+                        {
+                            source: 'Riskware/BitCoin',
+                            target: 'Canada',
+                            weight: 0.6
+                        },
+                    ]
+                }]
+            };
 
-          // option.series[0].nodes.forEach(function (node, i) {
-          //   var color;
-          //   var fontStyle;
-          //   if (i < 10) {
-          //     color = 'red';
-          //     fontStyle = 'normal';
-          //   }
-          //   else {
-          //     color = 'blue';
-          //     fontStyle = 'italic';
-          //   }
-          //   node.itemStyle = {
-          //     normal: {
-          //       label: {
-          //         textStyle: {
-          //           color: color,
-          //           fontWeight: 'bold',
-          //           fontStyle: fontStyle,
-          //         }
-          //       }
-          //     }
-          //   }
-          // })
-          
-          var myChart = echarts.init(document.getElementById('main'));
-          myChart.setOption(option);
+            // option.series[0].nodes.forEach(function (node, i) {
+            //   var color;
+            //   var fontStyle;
+            //   if (i < 10) {
+            //     color = 'red';
+            //     fontStyle = 'normal';
+            //   }
+            //   else {
+            //     color = 'blue';
+            //     fontStyle = 'italic';
+            //   }
+            //   node.itemStyle = {
+            //     normal: {
+            //       label: {
+            //         textStyle: {
+            //           color: color,
+            //           fontWeight: 'bold',
+            //           fontStyle: fontStyle,
+            //         }
+            //       }
+            //     }
+            //   }
+            // })
+
+            var myChart = echarts.init(document.getElementById('main'));
+            myChart.setOption(option);
         });
-      </script>
-  </body>
+
+    </script>
+</body>
+
 </html>

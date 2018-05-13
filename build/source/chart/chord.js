@@ -81,6 +81,7 @@ define('echarts/chart/chord', [
     var vec2 = require('zrender/tool/vector');
     var Graph = require('../data/Graph');
     var ChordLayout = require('../layout/Chord');
+
     function Chord(ecTheme, messageCenter, zr, option, myChart) {
         ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
         this.scaleLineLength = 4;
@@ -186,7 +187,8 @@ define('echarts/chart/chord', [
             if (!mainSerie.ribbonType) {
                 var minRadius = mainSerie.minRadius;
                 var maxRadius = mainSerie.maxRadius;
-                var min = Infinity, max = -Infinity;
+                var min = Infinity,
+                    max = -Infinity;
                 mainGraph.eachNode(function (node) {
                     max = Math.max(node.layout.size, max);
                     min = Math.min(node.layout.size, min);
@@ -274,11 +276,15 @@ define('echarts/chart/chord', [
             }
             var graph = Graph.fromMatrix(nodesData, matrix, true);
             graph.eachNode(function (n, idx) {
-                n.layout = { size: n.data.outValue };
+                n.layout = {
+                    size: n.data.outValue
+                };
                 n.rawIndex = n.data.rawIndex;
             });
             graph.eachEdge(function (e) {
-                e.layout = { weight: e.data.weight };
+                e.layout = {
+                    weight: e.data.weight
+                };
             });
             return graph;
         },
@@ -333,10 +339,14 @@ define('echarts/chart/chord', [
                         }
                     }
                 }
-                n.layout = { size: value };
+                n.layout = {
+                    size: value
+                };
             });
             graph.eachEdge(function (e) {
-                e.layout = { weight: e.data.weight == null ? 1 : e.data.weight };
+                e.layout = {
+                    weight: e.data.weight == null ? 1 : e.data.weight
+                };
             });
             return graph;
         },
@@ -437,7 +447,9 @@ define('echarts/chart/chord', [
                         clockWise: clockWise
                     },
                     clickable: mainSerie.clickable,
-                    highlightStyle: { brushType: 'fill' }
+                    highlightStyle: {
+                        brushType: 'fill'
+                    }
                 });
                 sector.style.lineWidth = this.deepQuery([
                     node.data,
@@ -513,7 +525,7 @@ define('echarts/chart/chord', [
             }, this);
         },
         _buildLabels: function (serie, serieIdx, graph, mainSerie) {
-            var rotateLabel = this.query(mainSerie, 'itemStyle.normal.label.rotate');
+            // var rotateLabel = this.query(mainSerie, 'itemStyle.normal.label.rotate');
             var labelDistance = this.query(mainSerie, 'itemStyle.normal.label.distance');
             var center = this.parseCenter(this.zr, mainSerie.center);
             var radius = this.parseRadius(this.zr, mainSerie.radius);
@@ -530,8 +542,7 @@ define('echarts/chart/chord', [
                 var isRightSide = angle <= 90 || angle >= 270;
                 angle = angle * Math.PI / 180;
                 var v = [
-                    Math.cos(angle),
-                    -Math.sin(angle)
+                    Math.cos(angle), -Math.sin(angle)
                 ];
                 var distance = 0;
                 if (mainSerie.ribbonType) {
@@ -550,6 +561,9 @@ define('echarts/chart/chord', [
                         textAlign: isRightSide ? 'left' : 'right'
                     }
                 };
+                var rotateLabel = this.query(
+                    node.data, 'itemStyle.normal.label.rotate'
+                );
                 if (rotateLabel) {
                     labelShape.rotation = isRightSide ? angle : Math.PI + angle;
                     if (isRightSide) {
@@ -571,6 +585,11 @@ define('echarts/chart/chord', [
                     node.data,
                     mainSerie
                 ], 'itemStyle.normal.label.textStyle'));
+
+                if (node.data.icon && node.data.icon.label) {
+                    labelShape.style.icon = node.data.icon.label;
+                }
+
                 labelShape = new TextShape(labelShape);
                 this.shapeList.push(labelShape);
                 node.labelShape = labelShape;
@@ -773,12 +792,10 @@ define('echarts/chart/chord', [
                             textAlign: isRightSide ? 'left' : 'right'
                         },
                         position: center.slice(),
-                        rotation: isRightSide ? [
-                            -theta / 180 * Math.PI,
+                        rotation: isRightSide ? [-theta / 180 * Math.PI,
                             0,
                             0
-                        ] : [
-                            -(theta + 180) / 180 * Math.PI,
+                        ] : [-(theta + 180) / 180 * Math.PI,
                             0,
                             0
                         ]
@@ -832,7 +849,8 @@ define('echarts/chart/chord', [
     zrUtil.inherits(Chord, ChartBase);
     require('../chart').define('chord', Chord);
     return Chord;
-});define('echarts/util/shape/Ribbon', [
+});
+define('echarts/util/shape/Ribbon', [
     'require',
     'zrender/shape/Base',
     'zrender/shape/util/PathProxy',
@@ -843,6 +861,7 @@ define('echarts/chart/chord', [
     var PathProxy = require('zrender/shape/util/PathProxy');
     var zrUtil = require('zrender/tool/util');
     var area = require('zrender/tool/area');
+
     function RibbonShape(options) {
         Base.call(this, options);
         this._pathProxy = new PathProxy();
@@ -895,7 +914,8 @@ define('echarts/chart/chord', [
     };
     zrUtil.inherits(RibbonShape, Base);
     return RibbonShape;
-});define('echarts/data/Graph', [
+});
+define('echarts/data/Graph', [
     'require',
     'zrender/tool/util'
 ], function (require) {
@@ -1155,7 +1175,8 @@ define('echarts/chart/chord', [
         return graph;
     };
     return Graph;
-});define('echarts/layout/Chord', ['require'], function (require) {
+});
+define('echarts/layout/Chord', ['require'], function (require) {
     var ChordLayout = function (opts) {
         opts = opts || {};
         this.sort = opts.sort || null;
