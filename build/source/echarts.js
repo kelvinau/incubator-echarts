@@ -19518,9 +19518,46 @@ define('zrender/zrender', [
             ctx.arc(x, y, r, startAngle, endAngle, !clockWise);
             ctx.lineTo(math.cos(endAngle) * r0 + x, math.sin(endAngle) * r0 + y);
             if (r0 !== 0) {
+                // outside sector
                 ctx.arc(x, y, r0, endAngle, startAngle, clockWise);
+
+
+                var img = new Image();
+                img.onload = start;
+                img.src = "http://icons.iconarchive.com/icons/custom-icon-design/all-country-flag/256/Jarvis-Island-Flag-icon.png";
+                function start() {
+
+                    var pattern = ctx.createPattern(img, 'repeat');
+
+                    //ctx.strokeStyle = pattern;
+                    //ctx.strokeStyle = 'blue';
+                    // ctx.lineWidth = 3;
+
+                    //ctx.fillStyle = 'blue';
+                    ctx.fillStyle = pattern;
+                    ctx.beginPath();
+
+                    ctx.moveTo(unitX * r0 + x, unitY * r0 + y);
+                    ctx.lineTo(unitX * r + x, unitY * r + y);
+                    ctx.arc(x, y, r, startAngle, endAngle, !clockWise);
+                    ctx.lineTo(math.cos(endAngle) * r0 + x, math.sin(endAngle) * r0 + y);
+                    ctx.arc(x, y, r0, endAngle, startAngle, clockWise);
+
+                    ctx.closePath();
+                    ctx.fill();
+
+                }
+
+
+       
             }
             ctx.closePath();
+
+
+
+
+
+
             return;
         },
         getRect: function (style) {
