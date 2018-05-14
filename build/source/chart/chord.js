@@ -423,7 +423,7 @@ define('echarts/chart/chord', [
         },
         _buildSectors: function (serie, serieIdx, graph, mainSerie) {
             var center = this.parseCenter(this.zr, mainSerie.center);
-            var radius = this.parseRadius(this.zr, mainSerie.radius);
+            //var radius = this.parseRadius(this.zr, mainSerie.radius);
             var clockWise = mainSerie.clockWise;
             var sign = clockWise ? 1 : -1;
             graph.eachNode(function (node) {
@@ -431,6 +431,10 @@ define('echarts/chart/chord', [
                 var color = category ? this.getColor(category.name) : this.getColor(node.id);
                 var startAngle = node.layout.startAngle / Math.PI * 180 * sign;
                 var endAngle = node.layout.endAngle / Math.PI * 180 * sign;
+
+                var radiusParam = this.query(node.data, 'radius') || mainSerie.radius;
+                var radius = this.parseRadius(this.zr, radiusParam);
+
                 var sector = new SectorShape({
                     zlevel: serie.zlevel,
                     z: serie.z,
@@ -529,10 +533,13 @@ define('echarts/chart/chord', [
             // var rotateLabel = this.query(mainSerie, 'itemStyle.normal.label.rotate');
             var labelDistance = this.query(mainSerie, 'itemStyle.normal.label.distance');
             var center = this.parseCenter(this.zr, mainSerie.center);
-            var radius = this.parseRadius(this.zr, mainSerie.radius);
+            //var radius = this.parseRadius(this.zr, mainSerie.radius);
             var clockWise = mainSerie.clockWise;
             var sign = clockWise ? 1 : -1;
             graph.eachNode(function (node) {
+                var radiusParam = this.query(node.data, 'radius') || mainSerie.radius;
+                var radius = this.parseRadius(this.zr, radiusParam);
+
                 var startAngle = node.layout.startAngle / Math.PI * 180 * sign;
                 var endAngle = node.layout.endAngle / Math.PI * 180 * sign;
                 var angle = (startAngle * -sign + endAngle * -sign) / 2;
@@ -599,8 +606,12 @@ define('echarts/chart/chord', [
         _buildRibbons: function (series, serieIdx, graph, mainSerie) {
             var serie = series[serieIdx];
             var center = this.parseCenter(this.zr, mainSerie.center);
-            var radius = this.parseRadius(this.zr, mainSerie.radius);
+            //var radius = this.parseRadius(this.zr, mainSerie.radius);
             graph.eachEdge(function (edge, idx) {
+                var lengthParam = this.query(edge.data, 'length');
+                var length = lengthParam || mainSerie.radius;
+                length = this.parseRadius(this.zr, length);
+
                 var color;
                 var other = graph.getEdge(edge.node2, edge.node1);
                 if (!other || edge.shape) {
@@ -631,7 +642,8 @@ define('echarts/chart/chord', [
                     style: {
                         x: center[0],
                         y: center[1],
-                        r: radius[0],
+                        l0: length[0],
+                        l1: lengthParam ? length[1] : length[0],
                         source0: s0,
                         source1: s1,
                         target0: t0,
@@ -875,26 +887,27 @@ define('echarts/util/shape/Ribbon', [
             path.begin(ctx);
             var cx = style.x;
             var cy = style.y;
-            var r = style.r;
+            var l0 = style.l0;
+            var l1 = style.l1;
             var s0 = style.source0 / 180 * Math.PI;
             var s1 = style.source1 / 180 * Math.PI;
             var t0 = style.target0 / 180 * Math.PI;
             var t1 = style.target1 / 180 * Math.PI;
-            var sx0 = cx + Math.cos(s0) * r;
-            var sy0 = cy + Math.sin(s0) * r;
-            var sx1 = cx + Math.cos(s1) * r;
-            var sy1 = cy + Math.sin(s1) * r;
-            var tx0 = cx + Math.cos(t0) * r;
-            var ty0 = cy + Math.sin(t0) * r;
-            var tx1 = cx + Math.cos(t1) * r;
-            var ty1 = cy + Math.sin(t1) * r;
+            var sx0 = cx + Math.cos(s0) * l0;
+            var sy0 = cy + Math.sin(s0) * l0;
+            var sx1 = cx + Math.cos(s1) * l1;
+            var sy1 = cy + Math.sin(s1) * l1;
+            var tx0 = cx + Math.cos(t0) * l0;
+            var ty0 = cy + Math.sin(t0) * l0;
+            var tx1 = cx + Math.cos(t1) * l1;
+            var ty1 = cy + Math.sin(t1) * l1;
             path.moveTo(sx0, sy0);
-            path.arc(cx, cy, style.r, s0, s1, !clockWise);
+            path.arc(cx, cy, l0, s0, s1, !clockWise);
             path.bezierCurveTo((cx - sx1) * 0.7 + sx1, (cy - sy1) * 0.7 + sy1, (cx - tx0) * 0.7 + tx0, (cy - ty0) * 0.7 + ty0, tx0, ty0);
             if (style.source0 === style.target0 && style.source1 === style.target1) {
                 return;
             }
-            path.arc(cx, cy, style.r, t0, t1, !clockWise);
+            path.arc(cx, cy, l1, t0, t1, !clockWise);
             path.bezierCurveTo((cx - tx1) * 0.7 + tx1, (cy - ty1) * 0.7 + ty1, (cx - sx0) * 0.7 + sx0, (cy - sy0) * 0.7 + sy0, sx0, sy0);
         },
         getRect: function (style) {
